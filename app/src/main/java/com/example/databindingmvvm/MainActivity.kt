@@ -1,6 +1,7 @@
 package com.example.databindingmvvm
 
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import android.widget.Toast
 import androidx.lifecycle.Observer
@@ -25,11 +26,20 @@ class MainActivity : AppCompatActivity() {
         })
 
         viewModel.finished.observe(this, Observer {
-            if (it) {
+            if (it== "itsOk") {
                 Toast.makeText(this, "Finalizado", Toast.LENGTH_LONG).show()
             }
         })
 
+        viewModel.finishAllBoolean.observe(this, Observer {
+            if (it == true) {
+                binding.progressBar.visibility = View.GONE
+                binding.textCalculateResult.text = "corrutina hecha"
+            }
+        })
+
+
+        buttonCalculateClick()
         buttonStartClick()
         buttonStopClick()
     }
@@ -52,4 +62,10 @@ class MainActivity : AppCompatActivity() {
             viewModel.stopTimer()
         }
     }
+    private fun buttonCalculateClick() {
+        binding.buttonCalculate.setOnClickListener {
+            viewModel.primeraCorrutine()
+        }
+    }
+
 }

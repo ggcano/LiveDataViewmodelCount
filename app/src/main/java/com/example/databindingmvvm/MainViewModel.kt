@@ -4,13 +4,20 @@ import android.os.CountDownTimer
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.lang.Thread.sleep
 
 class MainViewModel : ViewModel() {
 
     private lateinit var timer: CountDownTimer
     private val _seconds = MutableLiveData<Int>()
 
-    var finished = MutableLiveData<Boolean>()
+    var finished = MutableLiveData<String>()
+    var finishAllBoolean = MutableLiveData<Boolean>()
     var timerValue = MutableLiveData<Long>()
 
 
@@ -27,7 +34,7 @@ class MainViewModel : ViewModel() {
             }
 
             override fun onFinish() {
-                finished.value = true
+                finished.value = "itsOk"
             }
 
         }.start()
@@ -35,6 +42,16 @@ class MainViewModel : ViewModel() {
 
     fun stopTimer() {
         timer.cancel()
+    }
+
+    fun primeraCorrutine (){
+        viewModelScope.launch {
+            withContext(Dispatchers.IO){
+                delay(5000L)
+               finishAllBoolean.value
+            }
+         finishAllBoolean.postValue(true)
+        }
     }
 
 
