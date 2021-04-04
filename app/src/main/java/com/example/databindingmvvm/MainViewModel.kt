@@ -44,7 +44,7 @@ class MainViewModel : ViewModel() {
         timer.cancel()
     }
 
-    fun primeraCorrutine (){
+    fun checkCorrutines (){
         viewModelScope.launch {
             withContext(Dispatchers.IO){
                 delay(5000L)

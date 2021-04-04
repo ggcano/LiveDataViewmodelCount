@@ -64,7 +64,7 @@ class MainActivity : AppCompatActivity() {
     }
     private fun buttonCalculateClick() {
         binding.buttonCalculate.setOnClickListener {
-            viewModel.primeraCorrutine()
+            viewModel.checkCorrutines()
         }
     }
 
